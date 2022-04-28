@@ -1,0 +1,7 @@
+body {
+    height: 100vh;
+    cursor: none;
+}
+img {
+    position: fixed;
+}
