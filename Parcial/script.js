@@ -60,9 +60,18 @@ const editSerie = () => {
 }
 
 const search = () => {
-    const searchInput = document.getElementById('search-input');
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+    const table = document.getElementById('main-table');
+    let founded = false;
+    for (let i = 1; i < table.rows.length; i++) {
+        const cell = table.rows[i].getElementsByTagName("td");
+        for (let j = 0; j < cell.length; j++) {
+            if (cell[j].classList.contains("no-search")) { break }
+            founded = (cell[j].innerHTML.toLowerCase().indexOf(searchInput) > -1)? true : false;
+        }
+        table.rows[i].style.display = founded? "" : "none";
+    }
 }
-
 
 const addSerie = () => {
     const nameSerie = document.getElementById('serie-name');
@@ -72,14 +81,14 @@ const addSerie = () => {
         table.innerHTML += `
         <tr class="text-center">
             <td id="season-name${indexOfTable}">${nameSerie.value}</td>
-            <td id="season-max${indexOfTable}">${serieSeasons.value}</td>
-            <td id="season-actually${indexOfTable}">0</td>
-            <td>
+            <td id="season-max${indexOfTable}" class="no-search">${serieSeasons.value}</td>
+            <td id="season-actually${indexOfTable}" class="no-search">0</td>
+            <td class="no-search">
                 <button type="button" class="btn btn-primary btn-sm me-2" onclick="addSeason(${indexOfTable})">Agregar Temporada</button>
                 <button type="button" class="btn btn-danger btn-sm" onclick="subtractSeason(${indexOfTable})">Restar Temporada</button>
             </td>
-            <td id="percentage${indexOfTable}">0</td>
-            <td>
+            <td id="percentage${indexOfTable}" class="no-search">0</td>
+            <td class="no-search">
                 <button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#modify" data-index="${indexOfTable}">Editar</button>
             </td>
         </tr>
