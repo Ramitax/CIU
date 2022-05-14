@@ -12,7 +12,7 @@ const addSeason = (index) => {
     if( seasonActuallyValue < seasonMaxValue) {
         seasonActually.innerHTML=  seasonActuallyValue + 1;
         percentageAux = ( (seasonActuallyValue + 1) / seasonMaxValue) * 100;
-        percentage.innerHTML = percentageAux.toFixed();
+        percentage.innerHTML = percentageAux.toFixed() + ' %';
     }
 }
 
@@ -25,7 +25,7 @@ const subtractSeason = (index) => {
     if( seasonActually.innerHTML > 0) {
         seasonActually.innerHTML =  seasonActuallyValue - 1;
         percentageAux = ( (seasonActuallyValue - 1) / seasonMaxValue) * 100;
-        percentage.innerHTML = percentageAux.toFixed();
+        percentage.innerHTML = percentageAux.toFixed() + ' %';
     }
 }
 
@@ -56,11 +56,11 @@ const editSerie = () => {
     const percentage = document.getElementById(`percentage${index}`);
     const seasonNameModify = document.getElementById(`serie-name-modify`);
     const seasonMaxModify = document.getElementById(`serie-seasons-modify`);
-    if(seasonNameModify.value.trim() != '' &&  parseInt(seasonMaxModify.value) > 0) {
+    if(seasonNameModify.value.trim() != '' &&  parseFloat(seasonMaxModify.value) > 0) {
         seasonName.innerHTML = seasonNameModify.value;
-        seasonMax.innerHTML = seasonMaxModify.value;
+        seasonMax.innerHTML = parseInt(seasonMaxModify.value);
         seasonActually.innerHTML = '0';
-        percentage.innerHTML = '0';
+        percentage.innerHTML = '0 %';
     } else {
         alert("Falta en nombre de la serie o la cantidad de temporadas");
     }
@@ -86,17 +86,17 @@ const addSerie = () => {
     const nameSerie = document.getElementById('serie-name');
     const table = document.getElementById('table');
     const serieSeasons = document.getElementById('serie-seasons');
-    if( nameSerie.value.trim() !== "" && parseInt(serieSeasons.value) > 0){
+    if( nameSerie.value.trim() !== "" && parseFloat(serieSeasons.value) > 0){
         table.innerHTML += `
         <tr class="text-center">
             <td id="season-name${indexOfTable}">${nameSerie.value}</td>
-            <td id="season-max${indexOfTable}" class="no-search">${serieSeasons.value}</td>
+            <td id="season-max${indexOfTable}" class="no-search">${parseInt(serieSeasons.value)}</td>
             <td id="season-actually${indexOfTable}" class="no-search">0</td>
             <td class="no-search">
                 <button type="button" class="btn btn-primary btn-sm me-2" onclick="addSeason(${indexOfTable})">Agregar Temporada</button>
                 <button type="button" class="btn btn-danger btn-sm" onclick="subtractSeason(${indexOfTable})">Restar Temporada</button>
             </td>
-            <td id="percentage${indexOfTable}" class="no-search">0</td>
+            <td id="percentage${indexOfTable}" class="no-search">0 %</td>
             <td class="no-search">
                 <button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#modify" data-index="${indexOfTable}">Editar</button>
             </td>
