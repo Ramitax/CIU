@@ -61,9 +61,7 @@ const editSerie = () => {
         seasonMax.innerHTML = parseInt(seasonMaxModify.value);
         seasonActually.innerHTML = '0';
         percentage.innerHTML = '0 %';
-    } else {
-        alert("Falta en nombre de la serie o la cantidad de temporadas");
-    }
+    } else { alert("Falta en nombre de la serie o la cantidad de temporadas") }
 }
 
 const search = () => {
@@ -103,7 +101,5 @@ const addSerie = () => {
         </tr>
         `
         indexOfTable +=1;
-    } else {
-        alert("Falta en nombre de la serie o la cantidad de temporadas")
-    }
+    } else { alert("Falta en nombre de la serie o la cantidad de temporadas") }
 }
