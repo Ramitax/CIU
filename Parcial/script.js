@@ -52,24 +52,33 @@ const editSerie = () => {
     const index = buttonChanges.getAttribute('data-index');
     const seasonName = document.getElementById(`season-name${index}`);
     const seasonMax = document.getElementById(`season-max${index}`);
+    const seasonActually = document.getElementById(`season-actually${index}`);
+    const percentage = document.getElementById(`percentage${index}`);
     const seasonNameModify = document.getElementById(`serie-name-modify`);
     const seasonMaxModify = document.getElementById(`serie-seasons-modify`);
-    seasonName.innerHTML = seasonNameModify.value;
-    seasonMax.innerHTML = seasonMaxModify.value;
-    console.log(index);
+    if(seasonNameModify.value.trim() != '' &&  parseInt(seasonMaxModify.value) > 0) {
+        seasonName.innerHTML = seasonNameModify.value;
+        seasonMax.innerHTML = seasonMaxModify.value;
+        seasonActually.innerHTML = '0';
+        percentage.innerHTML = '0';
+    } else {
+        alert("Falta en nombre de la serie o la cantidad de temporadas");
+    }
 }
 
 const search = () => {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
     const table = document.getElementById('main-table');
     let founded = false;
-    for (let i = 1; i < table.rows.length; i++) {
-        const cell = table.rows[i].getElementsByTagName("td");
-        for (let j = 0; j < cell.length; j++) {
-            if (cell[j].classList.contains("no-search")) { break }
-            founded = (cell[j].innerHTML.toLowerCase().indexOf(searchInput) > -1)? true : false;
+    if (searchInput.trim() != ''){
+        for (let i = 1; i < table.rows.length; i++) {
+            const cell = table.rows[i].getElementsByTagName("td");
+            for (let j = 0; j < cell.length; j++) {
+                if (cell[j].classList.contains("no-search")) { break }
+                founded = (cell[j].innerHTML.toLowerCase().indexOf(searchInput) > -1)? true : false;
+            }
+            table.rows[i].style.display = founded? "" : "none";
         }
-        table.rows[i].style.display = founded? "" : "none";
     }
 }
 
@@ -77,7 +86,7 @@ const addSerie = () => {
     const nameSerie = document.getElementById('serie-name');
     const table = document.getElementById('table');
     const serieSeasons = document.getElementById('serie-seasons');
-    if( nameSerie.value !== "" && parseInt(serieSeasons.value) > 0){
+    if( nameSerie.value.trim() !== "" && parseInt(serieSeasons.value) > 0){
         table.innerHTML += `
         <tr class="text-center">
             <td id="season-name${indexOfTable}">${nameSerie.value}</td>
@@ -95,6 +104,6 @@ const addSerie = () => {
         `
         indexOfTable +=1;
     } else {
-        alert("Falta el nombre o el numero de temporadas")
+        alert("Falta en nombre de la serie o la cantidad de temporadas")
     }
 }

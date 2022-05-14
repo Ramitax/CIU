@@ -1,124 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tus Series</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-</head>
-<body class="m-0 vh-100 row justify-content-center align-items-center">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tus Series</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link rel="stylesheet" href="styles.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    </head>
+    <body class="m-0 vh-100 row justify-content-center align-items-center">
 
+        <!-- Modal de creacion -->
+        <div class="modal fade" id="create" tabindex="-1" aria-labelledby="modifyLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="createLabel">Agregar una nueva serie</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="serie-name" class="col-form-label">Nombre de la serie:</label>
+                            <input type="text" class="form-control" id="serie-name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="serie-name" class="col-form-label">Cantidad de temporadas</label>
+                            <input type="number" class="form-control" id="serie-seasons">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="addSerie()">Agregar</button>
+                </div>
+            </div>
+            </div>
+        </div>
 
-    <div class="modal fade" id="create" tabindex="-1" aria-labelledby="modifyLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="createLabel">Agregar una nueva serie</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- Modal de modificacion -->
+        <div class="modal fade" id="modify" tabindex="-1" aria-labelledby="modifyLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="modifyLabel">Editar la serie</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="serie-name-modify" class="col-form-label">Nombre de la serie:</label>
+                            <input type="text" class="form-control" id="serie-name-modify">
+                        </div>
+                        <div class="mb-3">
+                            <label for="serie-seasons-modify" class="col-form-label">Cantidad de temporadas</label>
+                            <input type="number" class="form-control" id="serie-seasons-modify">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="save-changes" onclick="editSerie()">Guardar</button>
+                </div>
             </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="serie-name" class="col-form-label">Nombre de la serie:</label>
-                        <input type="text" class="form-control" id="serie-name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="serie-name" class="col-form-label">Cantidad de temporadas</label>
-                        <input type="number" class="form-control" id="serie-seasons">
-                    </div>
-                </form>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="addSerie()">Agregar</button>
-            </div>
-          </div>
         </div>
-    </div>
 
-    <div class="modal fade" id="modify" tabindex="-1" aria-labelledby="modifyLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="modifyLabel">Editar la serie</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- App -->
+        <div class="col-auto bg-dark p-2 w-75 h-75 rounded d-flex flex-column">
+            <h1 class="text-white">Tus Series</h1>
+            <hr class="text-white">
+            <div class="input-group mb-3">
+                <input 
+                type="text" 
+                class="form-control" 
+                placeholder="Serie a buscar"
+                id="search-input"
+                onkeyup="search()"
+                >
             </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="serie-name-modify" class="col-form-label">Nombre de la serie:</label>
-                        <input type="text" class="form-control" id="serie-name-modify">
-                    </div>
-                    <div class="mb-3">
-                        <label for="serie-seasons-modify" class="col-form-label">Cantidad de temporadas</label>
-                        <input type="number" class="form-control" id="serie-seasons-modify">
-                    </div>
-                </form>
+            <table  class="table table-dark table-striped"
+                    id="main-table">
+                <thead>
+                    <tr class="text-center">
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Temporadas</th>
+                        <th scope="col">Temporadas vistas</th>
+                        <th scope="col">Temporadas</th>
+                        <th scope="col">Porcentaje visto</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody id="table">
+                    <tr class="text-center">
+                        <td id="season-name1">Grande Pa</td>
+                        <td id="season-max1" class="no-search">5</td>
+                        <td id="season-actually1" class="no-search">1</td>
+                        <td class="no-search">
+                            <button type="button" class="btn btn-primary btn-sm me-2" onclick="addSeason(1)">Agregar Temporada</button>
+                            <button type="button" class="btn btn-danger btn-sm" onclick="subtractSeason(1)">Restar Temporada</button>
+                        </td>
+                        <td id="percentage1" class="no-search">20</td>
+                        <td class="no-search">
+                            <button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#modify" data-index="1">Editar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">Agregar</button>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="save-changes" onclick="editSerie()">Guardar</button>
-            </div>
-          </div>
         </div>
-      </div>
-
-    <div class="col-auto bg-dark p-2 w-75 h-75 rounded d-flex flex-column">
-        <h1 class="text-white">Tus Series</h1>
-        <hr class="text-white">
-        <div class="input-group mb-3">
-            <input 
-            type="text" 
-            class="form-control" 
-            placeholder="Serie a buscar"
-            id="search-input"
-            onkeyup="search()"
-            >
-        </div>
-        <table  class="table table-dark table-striped"
-                id="main-table">
-            <thead>
-                <tr class="text-center">
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Temporadas</th>
-                    <th scope="col">Temporadas vistas</th>
-                    <th scope="col">Temporadas</th>
-                    <th scope="col">Porcentaje visto</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody id="table">
-                <tr class="text-center">
-                    <td id="season-name1">Grande Pa</td>
-                    <td id="season-max1" class="no-search">5</td>
-                    <td id="season-actually1" class="no-search">1</td>
-                    <td class="no-search">
-                        <button type="button" class="btn btn-primary btn-sm me-2" onclick="addSeason(1)">Agregar Temporada</button>
-                        <button type="button" class="btn btn-danger btn-sm" onclick="subtractSeason(1)">Restar Temporada</button>
-                    </td>
-                    <td id="percentage1" class="no-search">20</td>
-                    <td class="no-search">
-                        <button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#modify" data-index="1">Editar</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">Agregar</button>
-        </div>
-    </div>
-    <script src="script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-</body>
+        <script src="script.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
 </html>
-
-
-<!--
-
-    
--->
